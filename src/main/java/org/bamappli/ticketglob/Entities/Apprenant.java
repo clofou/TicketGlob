@@ -1,5 +1,6 @@
 package org.bamappli.ticketglob.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,10 +19,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Apprenant extends Personne implements Serializable {
-    @OneToMany(mappedBy = "apprenant")
-    private List<Ticket> tickets;
+    //@OneToMany(mappedBy = "apprenant")
+    //private List<Ticket> tickets;
 
     @ManyToOne
     @JoinColumn(name = "formateur_id")
+    //@JsonManagedReference
     private Formateur formateur;
 }

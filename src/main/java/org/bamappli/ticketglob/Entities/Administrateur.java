@@ -12,11 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Administrateur extends Personne implements Serializable {
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
-    private List<Formateur> formateurs;
+    /*@OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    private List<Formateur> formateurs;*/
 }

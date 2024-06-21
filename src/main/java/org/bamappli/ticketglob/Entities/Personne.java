@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,5 +20,13 @@ public class Personne implements Serializable {
     @Column(unique = true, nullable = false)
     private String email;
     private String motDePasse;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "personne_role",
+            joinColumns = @JoinColumn(name = "personne_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Roles> roles;
 
 }

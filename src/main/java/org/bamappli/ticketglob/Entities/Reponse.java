@@ -19,14 +19,14 @@ public class Reponse implements Serializable {
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
-    @OneToMany(mappedBy = "reponse")
-    private List<Image> images;
+    //@OneToMany(mappedBy = "reponse")
+    //private List<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "formateur_id")
     private Formateur formateur;
 
-    @OneToOne(mappedBy = "reponse")
-    private BDC bdc;
+    //@OneToOne(mappedBy = "reponse")
+    //private BDC bdc;
 
 }
