@@ -1,5 +1,6 @@
 package org.bamappli.ticketglob.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,18 +16,21 @@ public class Reponse implements Serializable {
     private String text;
     private Date date;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
-    //@OneToMany(mappedBy = "reponse")
-    //private List<Image> images;
+    @JsonIgnore
+    @OneToMany(mappedBy = "reponse")
+    private List<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "formateur_id")
     private Formateur formateur;
 
-    //@OneToOne(mappedBy = "reponse")
-    //private BDC bdc;
+    @JsonIgnore
+    @OneToOne(mappedBy = "reponse")
+    private BDC bdc;
 
 }

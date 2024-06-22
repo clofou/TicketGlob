@@ -18,7 +18,7 @@ public class TicketGlobApplication {
 
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager, BCryptPasswordEncoder passwordEncoder) {
 
         return args -> {

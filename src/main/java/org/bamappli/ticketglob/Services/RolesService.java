@@ -30,16 +30,17 @@ public class RolesService {
         return roleRepository.findById(id);
     }
 
-    public Roles misAjour(Integer id, @NotNull Roles updateRoles){
-        Optional<Roles> existingA = roleRepository.findById(id);
-        if(existingA.isPresent()){
-            Roles existingRoles = existingA.get();
-            existingRoles.setRole(updateRoles.getRole());
-            roleRepository.save(existingRoles);
-        }
+    public Roles misAjour(String id, @NotNull Roles updateRoles, String oldRoleName){
+        // Delete the old role
+        roleRepository.deleteByRole(oldRoleName);
+
+        // Create a new role
+        Roles newRole = new Roles();
+        newRole.setRole(updateRoles.getRole());
 
 
-        return existingA.orElse(null);
+
+        return roleRepository.save(newRole);
     }
 
     public Roles updateRolesPartial(Integer id, Roles updatedFields) {
@@ -53,8 +54,8 @@ public class RolesService {
                 .orElseThrow(() -> new RuntimeException("Roles not found"));
     }
 
-    public void effacer(Integer id){
-        roleRepository.deleteById(id);
+    public void effacer(String id){
+        roleRepository.deleteByRole(id);
     }
 
 }

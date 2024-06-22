@@ -1,5 +1,6 @@
 package org.bamappli.ticketglob.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,14 +21,17 @@ public class Formateur extends Personne implements Serializable {
     @JoinColumn(name = "admin_id")
     private Administrateur admin;
 
-    //@OneToMany(mappedBy = "formateur")
-    //private List<Apprenant> apprenants;
+    @JsonIgnore
+    @OneToMany(mappedBy = "formateur")
+    private List<Apprenant> apprenants;
 
-    //@OneToMany(mappedBy = "formateur")
-    //private List<Reponse> reponses;
+    @JsonIgnore
+    @OneToMany(mappedBy = "formateur")
+    private List<Reponse> reponses;
 
-    //@OneToMany(mappedBy = "formateur")
-    //private List<BDC> bdcs;
+    @JsonIgnore
+    @OneToMany(mappedBy = "formateur")
+    private List<BDC> bdcs;
 
 
 

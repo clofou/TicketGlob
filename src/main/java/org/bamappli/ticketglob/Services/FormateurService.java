@@ -1,8 +1,10 @@
 package org.bamappli.ticketglob.Services;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.bamappli.ticketglob.Entities.Administrateur;
 import org.bamappli.ticketglob.Entities.Formateur;
 import org.bamappli.ticketglob.Entities.Formateur;
 import org.bamappli.ticketglob.Entities.Roles;
@@ -19,13 +21,27 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
+@Transactional
 public class FormateurService {
     private FormateurRepository formateurRepository;
+    private ManageAccountService manageAccountService;
 
     public Formateur creer(Formateur formateur){
-        String motDePasse = formateur.getMotDePasse();
-        formateur.setMotDePasse(new BCryptPasswordEncoder().encode(motDePasse));
-        return formateurRepository.save(formateur);
+        formateur.setPassword(new BCryptPasswordEncoder().encode(formateur.getPassword()));
+        Formateur formateur1 = (Formateur) manageAccountService.creerPersonne(formateur);
+
+        Roles role1 = new Roles();
+        role1.setRole("FORMATEUR");
+        manageAccountService.creerRole(role1);
+
+        Roles role3 = new Roles();
+        role3.setRole("APPRENANT");
+        manageAccountService.creerRole(role3);
+
+        manageAccountService.AttribuerRoleAPersonne(formateur1.getUsername(), role1);
+        manageAccountService.AttribuerRoleAPersonne(formateur1.getUsername(), role3);
+
+        return formateur1;
     }
 
     public List<Formateur> tout(){

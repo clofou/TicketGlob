@@ -1,8 +1,10 @@
 package org.bamappli.ticketglob.Services;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.bamappli.ticketglob.Entities.Administrateur;
 import org.bamappli.ticketglob.Entities.Apprenant;
 import org.bamappli.ticketglob.Entities.Roles;
 import org.bamappli.ticketglob.Repositories.ApprenantRepository;
@@ -18,13 +20,21 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
+@Transactional
 public class ApprenantService {
     private ApprenantRepository apprenantRepository;
+    private ManageAccountService manageAccountService;
 
     public Apprenant creer(Apprenant apprenant){
-        String motDePasse = apprenant.getMotDePasse();
-        apprenant.setMotDePasse(new BCryptPasswordEncoder().encode(motDePasse));
-        return apprenantRepository.save(apprenant);
+        apprenant.setPassword(new BCryptPasswordEncoder().encode(apprenant.getPassword()));
+        Apprenant ap = (Apprenant) manageAccountService.creerPersonne(apprenant);
+
+        Roles role3 = new Roles();
+        role3.setRole("APPRENANT");
+        manageAccountService.creerRole(role3);
+        manageAccountService.AttribuerRoleAPersonne(ap.getUsername(), role3);
+
+        return ap;
     }
 
     public List<Apprenant> tout(){

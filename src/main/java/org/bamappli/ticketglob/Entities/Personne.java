@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,14 +22,13 @@ public class Personne implements Serializable {
     private String prenom;
     @Column(unique = true, nullable = false)
     private String email;
-    private String motDePasse;
+    @Column(length = 50, unique = true, nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
+    private Boolean enabled = Boolean.TRUE;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(
-            name = "personne_role",
-            joinColumns = @JoinColumn(name = "personne_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Roles> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Roles> roles = new ArrayList<>();
 
 }

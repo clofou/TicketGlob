@@ -33,12 +33,12 @@ public class RolesController {
     }
 
     @PutMapping("/{id}")
-    public Roles update(@PathVariable Integer id, @RequestBody Roles roles) {
-        return rolesService.misAjour(id, roles);
+    public Roles update(@PathVariable String id, @RequestBody Roles roles) {
+        return rolesService.misAjour(id, roles, id);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable String id) {
         rolesService.effacer(id);
     }
 

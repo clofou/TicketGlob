@@ -1,9 +1,11 @@
 package org.bamappli.ticketglob.Services;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.bamappli.ticketglob.Entities.Administrateur;
+import org.bamappli.ticketglob.Entities.Roles;
 import org.bamappli.ticketglob.Repositories.AdministrateurRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,15 +17,33 @@ import java.util.Optional;
 @Getter
 @Setter
 @AllArgsConstructor
+@Transactional
 public class AdminService {
     private AdministrateurRepository adminRepository;
+    private ManageAccountService manageAccountService;
 
     public Administrateur creer(Administrateur admin){
-        String motDePasse = admin.getMotDePasse();
-        admin.setMotDePasse(new BCryptPasswordEncoder().encode(motDePasse));
 
+        admin.setPassword(new BCryptPasswordEncoder().encode(admin.getPassword()));
+        Administrateur ad = (Administrateur) manageAccountService.creerPersonne(admin);
 
-        return adminRepository.save(admin);
+        Roles role1 = new Roles();
+        role1.setRole("ADMIN");
+        manageAccountService.creerRole(role1);
+
+        Roles role2 = new Roles();
+        role2.setRole("FORMATEUR");
+        manageAccountService.creerRole(role2);
+
+        Roles role3 = new Roles();
+        role3.setRole("APPRENANT");
+        manageAccountService.creerRole(role3);
+
+        manageAccountService.AttribuerRoleAPersonne(ad.getUsername(), role1);
+        manageAccountService.AttribuerRoleAPersonne(ad.getUsername(), role2);
+        manageAccountService.AttribuerRoleAPersonne(ad.getUsername(), role3);
+
+        return ad;
     }
 
     public List<Administrateur> tout(){

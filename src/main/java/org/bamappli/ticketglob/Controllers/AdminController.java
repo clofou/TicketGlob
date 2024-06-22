@@ -6,7 +6,8 @@ import lombok.Setter;
 import org.bamappli.ticketglob.Entities.Administrateur;
 import org.bamappli.ticketglob.Entities.Roles;
 import org.bamappli.ticketglob.Services.AdminService;
-import org.bamappli.ticketglob.Services.PersonneRoleService;
+import org.bamappli.ticketglob.Services.ManageAccountService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +20,13 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 public class AdminController {
+    private final BCryptPasswordEncoder passwordEncoder;
     AdminService adminService;
-    PersonneRoleService personneRoleService;
+
 
     @PostMapping
     public Administrateur create(@RequestBody Administrateur admin) {
-        Administrateur administrateur = adminService.creer(admin);
-        Roles role = new Roles();
-        role.setRole("ADMIN");
-        administrateur.setRoles(Set.of(role));
-        adminService.updateAdministrateurPartial(administrateur.getId(), administrateur);
-        return administrateur;
+        return adminService.creer(admin);
     }
 
     @GetMapping

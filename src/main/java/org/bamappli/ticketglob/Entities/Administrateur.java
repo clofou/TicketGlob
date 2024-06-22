@@ -1,5 +1,6 @@
 package org.bamappli.ticketglob.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @Entity
 public class Administrateur extends Personne implements Serializable {
-    /*@OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
-    private List<Formateur> formateurs;*/
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    private List<Formateur> formateurs;
 }

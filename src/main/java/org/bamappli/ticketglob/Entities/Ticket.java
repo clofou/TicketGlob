@@ -1,6 +1,7 @@
 package org.bamappli.ticketglob.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.bamappli.ticketglob.Entities.Enum.Priorite;
@@ -26,14 +27,16 @@ public class Ticket implements Serializable {
     //@JsonBackReference
     private Apprenant apprenant;
 
-    //@ManyToMany(mappedBy = "tickets")
-    //private List<Categorie> categorieList;
+    @ManyToOne
+    @JoinColumn(name = "tickets")
+    private Categorie categorie;
 
-    //@ManyToMany(mappedBy = "tickets")
-    //private List<Image> imageList;
+    @JsonIgnore
+    @OneToMany(mappedBy = "ticket")
+    private List<Image> imageList;
 
-    //@OneToMany(mappedBy = "ticket")
-    //private List<Reponse> reponses;
+    @OneToMany(mappedBy = "ticket")
+    private List<Reponse> reponses;
 
 
 
