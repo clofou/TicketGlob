@@ -3,8 +3,11 @@ package org.bamappli.ticketglob.Controllers;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.bamappli.ticketglob.Entities.Enum.Statut;
 import org.bamappli.ticketglob.Entities.Formateur;
+import org.bamappli.ticketglob.Entities.Ticket;
 import org.bamappli.ticketglob.Services.FormateurService;
+import org.bamappli.ticketglob.Services.TicketService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FormateurController {
     FormateurService formateurService;
+    TicketService ticketService;
 
     @PostMapping
     public Formateur create(@RequestBody Formateur formateur) {

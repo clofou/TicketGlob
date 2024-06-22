@@ -1,7 +1,7 @@
 package org.bamappli.ticketglob.Entities.Enum;
 
 public enum Statut {
-    OUVERT,
+    ENVOYER,
     EN_COURS,
     TRAITER
 

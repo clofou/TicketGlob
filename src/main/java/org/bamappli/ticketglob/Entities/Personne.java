@@ -29,6 +29,7 @@ public class Personne implements Serializable {
     private Boolean enabled = Boolean.TRUE;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
     private List<Roles> roles = new ArrayList<>();
 
 }

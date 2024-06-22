@@ -3,7 +3,10 @@ package org.bamappli.ticketglob.Services;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.bamappli.ticketglob.Entities.Apprenant;
 import org.bamappli.ticketglob.Entities.Ticket;
+import org.bamappli.ticketglob.Models.MailStructure;
+import org.bamappli.ticketglob.Repositories.FormateurRepository;
 import org.bamappli.ticketglob.Repositories.TicketRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +19,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TicketService {
     private TicketRepository ticketRepository;
+    private FormateurRepository formateurRepository;
+    private ManageAccountService manageAccountService;
+    private MailService mailService;
 
     public Ticket creer(Ticket ticket){
-        return ticketRepository.save(ticket);
+        Apprenant apprenant = (Apprenant) manageAccountService.getCurrentUser();
+        ticket.setApprenant(apprenant);
+        Ticket ticket1 = ticketRepository.save(ticket);
+
+        List<String> emailsList= formateurRepository.recupererMailDeTousLesFormateurs();
+        MailStructure mailStructure = new MailStructure();
+        mailStructure.setSubject("Notification Etat du Ticket");
+        mailStructure.setMessage("Nouveau Ticket ajouté dans l'application par L'apprenant " + apprenant.getUsername());
+
+        for (String mail: emailsList){
+            System.out.println(mail);
+            mailService.sendMail(mail, mailStructure, ticket1.getId());
+        }
+        return ticket1;
     }
 
     public List<Ticket> tout(){
@@ -39,6 +58,17 @@ public class TicketService {
             ticketRepository.save(existingTicket);
         }
         return existingTick.orElse(null);
+    }
+
+    public void updateTicketPartial(Long id, Ticket updatedFields) {
+        ticketRepository.findById(Math.toIntExact(id))
+                .map(ticket -> {
+                    if (updatedFields.getTitre() != null) ticket.setTitre(updatedFields.getTitre());
+                    if (updatedFields.getDescription() != null) ticket.setDescription(updatedFields.getDescription());
+                    if (updatedFields.getStatut() != null) ticket.setStatut(updatedFields.getStatut());
+                    return ticketRepository.save(ticket);
+                })
+                .orElseThrow(() -> new RuntimeException("Formateur not found"));
     }
 
     public void effacer(Integer id){

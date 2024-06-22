@@ -9,4 +9,5 @@ public interface ManageAccountService {
     public void AttribuerRoleAPersonne(String username, Roles role);
     public void SupprimerRoleAPersonne(String username, Roles role);
     public Personne loadUserByUsername(String username);
+    public Personne getCurrentUser();
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bamappli.ticketglob.Entities.Administrateur;
 import org.bamappli.ticketglob.Entities.Apprenant;
+import org.bamappli.ticketglob.Entities.Formateur;
 import org.bamappli.ticketglob.Entities.Roles;
 import org.bamappli.ticketglob.Repositories.ApprenantRepository;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +27,8 @@ public class ApprenantService {
     private ManageAccountService manageAccountService;
 
     public Apprenant creer(Apprenant apprenant){
+        Formateur formateur = (Formateur) manageAccountService.getCurrentUser();
+        apprenant.setFormateur(formateur);
         apprenant.setPassword(new BCryptPasswordEncoder().encode(apprenant.getPassword()));
         Apprenant ap = (Apprenant) manageAccountService.creerPersonne(apprenant);
 

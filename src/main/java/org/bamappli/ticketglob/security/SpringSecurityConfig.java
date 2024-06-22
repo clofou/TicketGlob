@@ -32,6 +32,7 @@ public class SpringSecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable).
                 authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                    auth.requestMatchers("/admin/apprenants").hasRole("FORMATEUR");
                     auth.requestMatchers("/apprenant/**").hasRole("APPRENANT");
                     auth.requestMatchers("/formateur/**").hasRole("FORMATEUR");
                 }).httpBasic(Customizer.withDefaults()).build();
@@ -42,7 +43,7 @@ public class SpringSecurityConfig {
         return new JdbcUserDetailsManager(dataSource);
     }
 
-    /*@Bean
+    @Bean
     public UserDetailsService users(){
 
         UserDetails user = User.builder().
@@ -60,14 +61,14 @@ public class SpringSecurityConfig {
 
         return new InMemoryUserDetailsManager(user, admin, formateur);
     }
-*/
-    /*@Bean
+
+    @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(users());
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
-    }*/
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){

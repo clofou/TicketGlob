@@ -19,12 +19,11 @@ public class Ticket implements Serializable {
     @Column(nullable = false, length = 80)
     private String titre;
     private String description;
-    private Statut statut;
-    private Priorite priorite;
+    private Statut statut = Statut.ENVOYER;
+    private Priorite priorite = Priorite.MOYEN;
 
     @ManyToOne
     @JoinColumn(name = "apprenant_id")
-    //@JsonBackReference
     private Apprenant apprenant;
 
     @ManyToOne

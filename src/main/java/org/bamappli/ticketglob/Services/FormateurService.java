@@ -4,10 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.bamappli.ticketglob.Entities.Administrateur;
+import org.bamappli.ticketglob.Entities.*;
 import org.bamappli.ticketglob.Entities.Formateur;
-import org.bamappli.ticketglob.Entities.Formateur;
-import org.bamappli.ticketglob.Entities.Roles;
 import org.bamappli.ticketglob.Repositories.FormateurRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Getter
@@ -27,6 +24,8 @@ public class FormateurService {
     private ManageAccountService manageAccountService;
 
     public Formateur creer(Formateur formateur){
+        Administrateur admin = (Administrateur) manageAccountService.getCurrentUser();
+        formateur.setAdmin(admin);
         formateur.setPassword(new BCryptPasswordEncoder().encode(formateur.getPassword()));
         Formateur formateur1 = (Formateur) manageAccountService.creerPersonne(formateur);
 
