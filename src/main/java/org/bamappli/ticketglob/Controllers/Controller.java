@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
     TicketService ticketService;
 
-    @GetMapping("/formateur/ticket/statut/{id}")
-    public String updateStatut(@PathVariable Long id) {
-        Ticket ticket = new Ticket();
-        ticket.setStatut(Statut.EN_COURS);
-        ticketService.updateTicketPartial(id, ticket);
+    @GetMapping("/formateur/ticket/statut/{id}/{nouveauStatut}")
+    public String updateStatut(@PathVariable Long id, @PathVariable Integer nouveauStatut) {
+        ticketService.updateStatut(id, nouveauStatut);
         return "Statut Mise à Jour";
     }
 }

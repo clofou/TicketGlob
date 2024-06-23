@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -14,7 +14,7 @@ public class Reponse implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String text;
-    private Date date;
+    private LocalDateTime date = LocalDateTime.now();
 
     @JsonIgnore
     @ManyToOne

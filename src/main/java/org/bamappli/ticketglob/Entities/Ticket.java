@@ -19,7 +19,9 @@ public class Ticket implements Serializable {
     @Column(nullable = false, length = 80)
     private String titre;
     private String description;
+    @Enumerated(EnumType.STRING)
     private Statut statut = Statut.ENVOYER;
+    @Enumerated(EnumType.STRING)
     private Priorite priorite = Priorite.MOYEN;
 
     @ManyToOne
@@ -27,7 +29,7 @@ public class Ticket implements Serializable {
     private Apprenant apprenant;
 
     @ManyToOne
-    @JoinColumn(name = "tickets")
+    @JoinColumn(name = "categorie_id")
     private Categorie categorie;
 
     @JsonIgnore

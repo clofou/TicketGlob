@@ -38,8 +38,8 @@ public class MailService {
             helper.setSubject(mailStructure.getSubject());
 
             String htmlMsg = "<html><body>" +
-                    "<p>" + mailStructure.getMessage() + "</p>" +
-                    "<a href=\"http://localhost:8080/formateur/ticket/statut/" + idTicket + "\" style=\"display:inline-block;padding:10px 20px;font-size:16px;color:#ffffff;background-color:#007bff;text-decoration:none;border-radius:5px;\">Commencer le traitement</a>" +
+                    "<h3>" + mailStructure.getMessage() + "</h3>" +
+                    "<a href=\"http://localhost:8080/formateur/ticket/statut/" + idTicket + "/1\" style=\"display:inline-block;padding:10px 20px;font-size:16px;color:#ffffff;background-color:#007bff;text-decoration:none;border-radius:5px;\">Commencer le traitement</a>" +
                     "</body></html>";
 
             helper.setText(htmlMsg, true);

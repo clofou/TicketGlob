@@ -4,15 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.bamappli.ticketglob.Entities.Administrateur;
-import org.bamappli.ticketglob.Entities.Roles;
 import org.bamappli.ticketglob.Services.AdminService;
-import org.bamappli.ticketglob.Services.ManageAccountService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/admin")

@@ -2,14 +2,12 @@ package org.bamappli.ticketglob.Services;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.bamappli.ticketglob.Entities.Apprenant;
 import org.bamappli.ticketglob.Entities.Personne;
 import org.bamappli.ticketglob.Entities.Roles;
 import org.bamappli.ticketglob.Repositories.PersonneRepository;
 import org.bamappli.ticketglob.Repositories.RolesRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service

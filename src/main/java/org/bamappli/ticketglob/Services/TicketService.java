@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.bamappli.ticketglob.Entities.Apprenant;
+import org.bamappli.ticketglob.Entities.Enum.Statut;
 import org.bamappli.ticketglob.Entities.Ticket;
 import org.bamappli.ticketglob.Models.MailStructure;
 import org.bamappli.ticketglob.Repositories.FormateurRepository;
@@ -30,12 +31,12 @@ public class TicketService {
 
         List<String> emailsList= formateurRepository.recupererMailDeTousLesFormateurs();
         MailStructure mailStructure = new MailStructure();
-        mailStructure.setSubject("Notification Etat du Ticket");
-        mailStructure.setMessage("Nouveau Ticket ajouté dans l'application par L'apprenant " + apprenant.getUsername());
+        mailStructure.setSubject("TicketGlob: "+ ticket1.getTitre());
+        mailStructure.setMessage("Nouveau Ticket ajouté dans l'application par L'apprenant " + apprenant.getUsername()+"\n"+ticket1.getDescription());
 
         for (String mail: emailsList){
             System.out.println(mail);
-            mailService.sendMail(mail, mailStructure, ticket1.getId());
+            mailService.sendMail(mail, mailStructure,ticket1.getId());
         }
         return ticket1;
     }
@@ -73,6 +74,14 @@ public class TicketService {
 
     public void effacer(Integer id){
         ticketRepository.deleteById(id);
+    }
+
+    public void updateStatut(Long id, Integer nouveauStatut){
+        Ticket ticket = new Ticket();
+        if (nouveauStatut == 1) ticket.setStatut(Statut.EN_COURS);
+        if (nouveauStatut == 2) ticket.setStatut(Statut.TRAITER);
+
+        updateTicketPartial(id, ticket);
     }
 
 }
