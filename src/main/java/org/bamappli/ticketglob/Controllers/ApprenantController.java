@@ -3,43 +3,43 @@ package org.bamappli.ticketglob.Controllers;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.bamappli.ticketglob.Entities.Apprenant;
-import org.bamappli.ticketglob.Services.ApprenantService;
+import org.bamappli.ticketglob.Entities.Ticket;
+import org.bamappli.ticketglob.Services.TicketService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/formateur/apprenants")
+@RequestMapping("/apprenant")
 @Getter
 @Setter
 @AllArgsConstructor
 public class ApprenantController {
-    ApprenantService apprenantService;
+    TicketService ticketService;
 
-    @PostMapping
-    public Apprenant create(@RequestBody Apprenant apprenant) {
-        return apprenantService.creer(apprenant);
+    @PostMapping("/tickets")
+    public Ticket createTicket(@RequestBody Ticket ticket) {
+        return ticketService.creer(ticket);
     }
 
-    @GetMapping
-    public List<Apprenant> getAll() {
-        return apprenantService.tout();
+    @GetMapping("/tickets")
+    public List<Ticket> getAllTicket() {
+        return ticketService.tout();
     }
-    @GetMapping("/{id}")
-    public Optional<Apprenant> getOne(@PathVariable Integer id) {
-        return apprenantService.unApprenant(id);
-    }
-
-    @PutMapping("/{id}")
-    public Apprenant update(@PathVariable Integer id, @RequestBody Apprenant apprenant) {
-        return apprenantService.misAjour(id, apprenant);
+    @GetMapping("/tickets/{id}")
+    public Optional<Ticket> getOneTicket(@PathVariable Integer id) {
+        return ticketService.unTicket(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        apprenantService.effacer(id);
+    @PutMapping("/tickets/{id}")
+    public Ticket updateTicket(@PathVariable Integer id, @RequestBody Ticket ticket) {
+        return ticketService.misAjour(id, ticket);
+    }
+
+    @DeleteMapping("/tickets/{id}")
+    public void deleteTicket(@PathVariable Integer id) {
+        ticketService.effacer(id);
     }
 
 }

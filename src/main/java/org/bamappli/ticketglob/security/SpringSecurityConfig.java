@@ -32,7 +32,6 @@ public class SpringSecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable).
                 authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/admin/apprenants").hasRole("FORMATEUR");
                     auth.requestMatchers("/apprenant/**").hasRole("APPRENANT");
                     auth.requestMatchers("/formateur/**").hasRole("FORMATEUR");
                 }).httpBasic(Customizer.withDefaults()).build();

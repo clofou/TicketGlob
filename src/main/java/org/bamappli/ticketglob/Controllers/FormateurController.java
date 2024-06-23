@@ -4,12 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.bamappli.ticketglob.Entities.Apprenant;
-import org.bamappli.ticketglob.Entities.Enum.Statut;
-import org.bamappli.ticketglob.Entities.Formateur;
 import org.bamappli.ticketglob.Entities.Reponse;
-import org.bamappli.ticketglob.Entities.Ticket;
 import org.bamappli.ticketglob.Services.ApprenantService;
-import org.bamappli.ticketglob.Services.FormateurService;
 import org.bamappli.ticketglob.Services.ReponseService;
 import org.bamappli.ticketglob.Services.TicketService;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +14,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/formateurs")
+@RequestMapping("/formateur")
 @Getter
 @Setter
 @AllArgsConstructor
 public class FormateurController {
     ApprenantService apprenantService;
     ReponseService reponseService;
+    TicketService ticketService;
 
     // Ajout , suppresion et Modification d'un compte Apprenant
     @PostMapping("/apprenants")
@@ -74,6 +71,12 @@ public class FormateurController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         reponseService.effacer(id);
+    }
+
+    @GetMapping("/ticket/statut/{id}/{nouveauStatut}")
+    public String updateStatutTicket(@PathVariable Long id, @PathVariable Integer nouveauStatut) {
+        ticketService.updateStatut(id, nouveauStatut);
+        return "Statut Mise à Jour";
     }
 
 }

@@ -23,13 +23,13 @@ public class AdminController {
     FormateurService formateurService;
     CategorieService categoryService;
     RolesService rolesService;
+    BdcService bdcService;
 
     // Ajout , suppresion et Modification d'un compte Admin
     @PostMapping
     public Administrateur create(@RequestBody Administrateur admin) {
         return adminService.creer(admin);
     }
-
     @GetMapping
     public List<Administrateur> getAll() {
         return adminService.tout();
@@ -38,16 +38,15 @@ public class AdminController {
     public Optional<Administrateur> getOne(@PathVariable Integer id) {
         return adminService.unAdministrateur(id);
     }
-
     @PutMapping("/{id}")
     public Administrateur update(@PathVariable Integer id, @RequestBody Administrateur admin) {
         return adminService.misAjour(id, admin);
     }
-
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         adminService.effacer(id);
     }
+
 
 
     // Ajout , suppresion et Modification d'un compte Apprenant
@@ -55,7 +54,6 @@ public class AdminController {
     public Apprenant createApprenant(@RequestBody Apprenant apprenant) {
         return apprenantService.creer(apprenant);
     }
-
     @GetMapping("/apprenants")
     public List<Apprenant> getAllApprenant() {
         return apprenantService.tout();
@@ -64,16 +62,15 @@ public class AdminController {
     public Optional<Apprenant> getOneApprenant(@PathVariable Integer id) {
         return apprenantService.unApprenant(id);
     }
-
     @PutMapping("/apprenants/{id}")
     public Apprenant updateApprenant(@PathVariable Integer id, @RequestBody Apprenant apprenant) {
         return apprenantService.misAjour(id, apprenant);
     }
-
     @DeleteMapping("/apprenants/{id}")
     public void deleteApprenant(@PathVariable Integer id) {
         apprenantService.effacer(id);
     }
+
 
 
     // Ajout , suppresion et Modification d'un compte Formateur
@@ -81,7 +78,6 @@ public class AdminController {
     public Formateur createFormateur(@RequestBody Formateur formateur) {
         return formateurService.creer(formateur);
     }
-
     @GetMapping("/formateurs")
     public List<Formateur> getAllFormateur() {
         return formateurService.tout();
@@ -90,28 +86,26 @@ public class AdminController {
     public Optional<Formateur> getOneFormateur(@PathVariable Integer id) {
         return formateurService.unFormateur(id);
     }
-
     @PutMapping("/formateurs/{id}")
     public Formateur updateFormateur(@PathVariable Integer id, @RequestBody Formateur formateur) {
         return formateurService.misAjour(id, formateur);
     }
-
     @DeleteMapping("/formateurs/{id}")
     public void deleteFormateur(@PathVariable Integer id) {
         formateurService.effacer(id);
     }
-
     @PatchMapping("/formateurs/{id}")
     public Formateur updateFormateurPartial(@PathVariable Integer id, @RequestBody Formateur formateur) {
         return formateurService.updateFormateurPartial(id, formateur);
     }
+
+
 
     // Gestion des Categories
     @PostMapping("/categories")
     public Categorie createCategorie(@RequestBody Categorie category) {
         return categoryService.creer(category);
     }
-
     @GetMapping("/categories")
     public List<Categorie> getAllCategory() {
         return categoryService.tout();
@@ -120,16 +114,16 @@ public class AdminController {
     public Optional<Categorie> getOneCategory(@PathVariable Integer id) {
         return categoryService.unCategory(id);
     }
-
     @PutMapping("/categories/{id}")
     public Categorie updateCategory(@PathVariable Integer id, @RequestBody Categorie category) {
         return categoryService.misAjour(id, category);
     }
-
     @DeleteMapping("/categories/{id}")
     public void deleteCategories(@PathVariable Integer id) {
         categoryService.effacer(id);
     }
+
+
 
 
     // Creation, mis a jour et suppresion de roles
@@ -137,7 +131,6 @@ public class AdminController {
     public Roles createRoles(@RequestBody Roles roles) {
         return rolesService.creer(roles);
     }
-
     @GetMapping("/roles")
     public List<Roles> getAllRoles() {
         return rolesService.tout();
@@ -146,15 +139,38 @@ public class AdminController {
     public Optional<Roles> getOneRoles(@PathVariable Integer id) {
         return rolesService.unRoles(id);
     }
-
     @PutMapping("/roles/{id}")
     public Roles updateRoles(@PathVariable String id, @RequestBody Roles roles) {
         return rolesService.misAjour(id, roles, id);
     }
-
     @DeleteMapping("/roles/{id}")
     public void deleteRoles(@PathVariable String id) {
         rolesService.effacer(id);
+    }
+
+
+
+
+    // Remplissage et gestion de la base de connaissance
+    @PostMapping("/bdc")
+    public BDC createQuestionforBDC(@RequestBody BDC bdc) {
+        return bdcService.creer(bdc);
+    }
+    @GetMapping("/bdc")
+    public List<BDC> getAllQuestionfromBdc() {
+        return bdcService.tout();
+    }
+    @GetMapping("/bdc/{id}")
+    public Optional<BDC> getOneQuestionFromBdc(@PathVariable Integer id) {
+        return bdcService.unBDC(id);
+    }
+    @PutMapping("/bdc/{id}")
+    public BDC updateQuestionFromBdc(@PathVariable Integer id, @RequestBody BDC bdc) {
+        return bdcService.misAjour(id, bdc);
+    }
+    @DeleteMapping("/bdc/{id}")
+    public void deleteQuestionFromBdc(@PathVariable Integer id) {
+        bdcService.effacer(id);
     }
 
 }
