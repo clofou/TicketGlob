@@ -16,8 +16,7 @@ public class Reponse implements Serializable {
     private String text;
     private LocalDateTime date = LocalDateTime.now();
 
-    @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 

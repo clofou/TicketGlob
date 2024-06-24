@@ -61,6 +61,7 @@ public class AdminService {
             existingAdministrateur.setEmail(updateAdministrateur.getEmail());
             existingAdministrateur.setNom(updateAdministrateur.getNom());
             existingAdministrateur.setPrenom(updateAdministrateur.getPrenom());
+            existingAdministrateur.setUsername(updateAdministrateur.getUsername());
             adminRepository.save(existingAdministrateur);
         }
 

@@ -59,7 +59,8 @@ public class FormateurService {
             existingFormateur.setNom(updateFormateur.getNom());
             existingFormateur.setPrenom(updateFormateur.getPrenom());
             existingFormateur.setSpecialite(updateFormateur.getSpecialite());
-            existingFormateur.setAdmin(updateFormateur.getAdmin());
+            Administrateur admin = (Administrateur) manageAccountService.getCurrentUser();
+            existingFormateur.setAdmin(admin);
 
             formateurRepository.save(existingFormateur);
         }

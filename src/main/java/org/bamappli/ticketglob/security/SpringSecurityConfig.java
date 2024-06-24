@@ -34,6 +34,7 @@ public class SpringSecurityConfig {
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/apprenant/**").hasRole("APPRENANT");
                     auth.requestMatchers("/formateur/**").hasRole("FORMATEUR");
+                    auth.anyRequest().permitAll();
                 }).httpBasic(Customizer.withDefaults()).build();
     }
 

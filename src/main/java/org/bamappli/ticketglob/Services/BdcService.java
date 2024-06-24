@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.bamappli.ticketglob.Entities.BDC;
+import org.bamappli.ticketglob.Entities.Formateur;
 import org.bamappli.ticketglob.Repositories.BdcRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class BdcService {
     private ManageAccountService manageAccountService;
 
     public BDC creer(BDC bdc){
+        Formateur formateur = (Formateur) manageAccountService.getCurrentUser();
+        bdc.setFormateur(formateur);
         return bdcRepository.save(bdc);
     }
 

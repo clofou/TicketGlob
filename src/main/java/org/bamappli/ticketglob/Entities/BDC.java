@@ -12,7 +12,7 @@ public class BDC implements Serializable {
     private Integer id;
     private String question;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reponse_id")
     private Reponse reponse;
 

@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bamappli.ticketglob.Entities.Reponse;
 import org.bamappli.ticketglob.Entities.Formateur;
+import org.bamappli.ticketglob.Entities.Ticket;
 import org.bamappli.ticketglob.Models.MailStructure;
 import org.bamappli.ticketglob.Repositories.FormateurRepository;
 import org.bamappli.ticketglob.Repositories.PersonneRepository;
 import org.bamappli.ticketglob.Repositories.ReponseRepository;
+import org.bamappli.ticketglob.Repositories.TicketRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import java.util.Optional;
 @Transactional
 public class ReponseService {
     private final PersonneRepository personneRepository;
+    private final TicketRepository ticketRepository;
     private ReponseRepository reponseRepository;
     private FormateurRepository formateurRepository;
     private ManageAccountService manageAccountService;
@@ -33,12 +36,16 @@ public class ReponseService {
         Formateur formateur = (Formateur) manageAccountService.getCurrentUser();
         reponse.setFormateur(formateur);
 
-        String email= personneRepository.getEmailAddressByTicketId(reponse.getTicket().getId());
-        MailStructure mailStructure = new MailStructure();
-        mailStructure.setSubject("Formateur "+formateur.getNom()+"a repondu a: "+ reponse.getTicket().getTitre()) ;
-        mailStructure.setMessage(reponse.getText());
-        mailService.sendMail(email, mailStructure,reponse.getTicket().getId());
-        ticketService.updateStatut(reponse.getTicket().getId(), 2);
+        if (reponse.getTicket() != null){
+            Ticket ticket = ticketRepository.findByTicketId(reponse.getTicket().getId());
+            String email= personneRepository.getEmailAddressByTicketId(reponse.getTicket().getId());
+            MailStructure mailStructure = new MailStructure();
+            mailStructure.setSubject("Formateur "+formateur.getNom()+" a repondu a: "+ ticket.getTitre()) ;
+            mailStructure.setMessage(reponse.getText());
+            mailService.sendMailToApprenant(email, mailStructure,reponse.getTicket().getId());
+            ticketService.updateStatut(reponse.getTicket().getId(), 2);
+        }
+
 
         return reponseRepository.save(reponse);
     }

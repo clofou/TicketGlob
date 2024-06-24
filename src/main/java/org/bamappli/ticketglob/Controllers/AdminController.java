@@ -48,7 +48,7 @@ public class AdminController {
     }
 
 
-
+    /*
     // Ajout , suppresion et Modification d'un compte Apprenant
     @PostMapping("/apprenants")
     public Apprenant createApprenant(@RequestBody Apprenant apprenant) {
@@ -70,7 +70,7 @@ public class AdminController {
     public void deleteApprenant(@PathVariable Integer id) {
         apprenantService.effacer(id);
     }
-
+*/
 
 
     // Ajout , suppresion et Modification d'un compte Formateur
@@ -148,30 +148,6 @@ public class AdminController {
         rolesService.effacer(id);
     }
 
-
-
-
-    // Remplissage et gestion de la base de connaissance
-    @PostMapping("/bdc")
-    public BDC createQuestionforBDC(@RequestBody BDC bdc) {
-        return bdcService.creer(bdc);
-    }
-    @GetMapping("/bdc")
-    public List<BDC> getAllQuestionfromBdc() {
-        return bdcService.tout();
-    }
-    @GetMapping("/bdc/{id}")
-    public Optional<BDC> getOneQuestionFromBdc(@PathVariable Integer id) {
-        return bdcService.unBDC(id);
-    }
-    @PutMapping("/bdc/{id}")
-    public BDC updateQuestionFromBdc(@PathVariable Integer id, @RequestBody BDC bdc) {
-        return bdcService.misAjour(id, bdc);
-    }
-    @DeleteMapping("/bdc/{id}")
-    public void deleteQuestionFromBdc(@PathVariable Integer id) {
-        bdcService.effacer(id);
-    }
 
 }
 
